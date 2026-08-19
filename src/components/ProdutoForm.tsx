@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Produto } from "../types/Produto";
+import { BotaoCadastrar, Campo, CampoTexto, Formulario } from "./ProdutoForm.styles";
 
 interface ProdutoFormProps {
     adicionarProduto: (produto: Produto) => void;
@@ -28,21 +29,20 @@ function ProdutoForm({adicionarProduto}: ProdutoFormProps) {
     }
 
     return (
-        <form className="mx-auto flex max-w-2xl flex-col gap-4 rounded-2xl bg-white p-6 shadow-lg" onSubmit={handleSubmit}>
-            <input className="rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200" type="text" placeholder="Nome do produto" value={nome}
+        <Formulario onSubmit={handleSubmit}>
+            <Campo type="text" placeholder="Nome do produto" value={nome}
                 onChange={(e) => setNome(e.target.value)} required
             />
-
-            <input className="rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200" type="number" placeholder="Preço" value={preco}
+            <Campo type="number" placeholder="Preço" value={preco}
                 onChange={(e) => setPreco(e.target.value)} required    
             />
 
-            <textarea className="rounded-lg border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-200" placeholder="Descrição" value={descricao}
+            <CampoTexto placeholder="Descrição" value={descricao}
                 onChange={(e) => setDescricao(e.target.value)} required
             />
 
-            <button className="rounded-lg bg-blue-500 px-4 py-3 font-semibold text-white transition hover:bg-blue-600" type="submit">Cadastrar produto</button>
-        </form>
+            <BotaoCadastrar type="submit">Cadastrar produto</BotaoCadastrar>
+        </Formulario>
     );
 }
 

@@ -1,6 +1,6 @@
 import type { Produto } from "../types/Produto";
 
-const API_URL = "https://crudcrud.com/api/96a4d9ab9b714ff69ec1c9e46f64c503";
+const API_URL = "https://crudcrud.com/api/77f4a7bd4629431a9d64885df97eb48c";
 
 export const buscarProdutos = async (): Promise<Produto[]> => {
     const resposta = await fetch(`${API_URL}/produtos`);

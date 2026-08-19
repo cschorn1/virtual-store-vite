@@ -1,4 +1,6 @@
+import { useState } from "react";
 import type { Produto } from "../types/Produto";
+import { Card, ImagemProduto, Conteudo, NomeProduto, DescricaoProduto, PrecoProduto, BotaoCarrinho, BotaoExcluir } from "./ProdutoCard.styles";
 
 interface ProdutoCardProps {
     produto: Produto;
@@ -6,21 +8,28 @@ interface ProdutoCardProps {
 }
 
 function ProdutoCard({ produto, excluirProduto }: ProdutoCardProps) {
+    const [adicionado, setAdicionado] = useState(false);
+    
     return (
-        <article className="overflow-hidden rounded-xl bg-white/70 shadow-md backdrop-blur-sm transition duration-300 hover:scale-105 hover:shadow-xl">
-            <img className="h-48 w-full object-cover"
-                src={produto.imagem} alt={produto.nome}    
-            />
+        <Card>
+            <ImagemProduto src={produto.imagem} alt={produto.nome}/>
 
-            <div className="flex min-h-56 flex-col p-5">
-                <h2 className="text-xl font-bold text-slate-800">{produto.nome}</h2>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-600">{produto.descricao}</p>
+            <BotaoExcluir type="button" aria-label={`Excluir ${produto.nome}`}
+                onClick={() => excluirProduto(produto._id!)}>X
+            </BotaoExcluir>
 
-                <strong className="mt-4 text-xl text-blue-600">R$ {produto.preco.toFixed(2)}</strong>
+            <Conteudo>
+                <NomeProduto>{produto.nome}</NomeProduto>
+                <DescricaoProduto>{produto.descricao}</DescricaoProduto>
 
-                <button onClick={() => excluirProduto(produto._id!)}className="mt-4 rounded-lg bg-red-500 px-4 py-2 font-medium text-white transition hover:bg-red-600">Excluir</button>
-            </div>
-        </article>
+                <PrecoProduto>R$ {produto.preco.toFixed(2)}</PrecoProduto>
+
+                <BotaoCarrinho type="button" $adicionado={adicionado} aria-pressed={adicionado}
+                    onClick={() => setAdicionado((estadoAtual) => !estadoAtual)}>
+                    {adicionado ? "Adicionado ao carrinho" : "Adicionar ao carrinho"}
+                </BotaoCarrinho>
+            </Conteudo>
+        </Card>
     );
 }
 
